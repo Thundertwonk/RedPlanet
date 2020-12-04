@@ -43,11 +43,9 @@ const Photos = () => {
     let card = null;
 
     useEffect(() => {
-		console.log('on load useeffect');
-
 		async function fetchData() {
 			try {
-				const { data } = await axios.get(`${url}&api_key=${api_key}`);
+				const data = await axios.get(`${url}&api_key=${api_key}`);
                 setLoading(false);
                 setPhotos(data);
 			} catch (e) {
@@ -55,6 +53,7 @@ const Photos = () => {
 				console.log(e);
 			}
         }
+        fetchData()
     }, []);
 
     const buildCard = (photo) => {
@@ -75,9 +74,12 @@ const Photos = () => {
 		);
     };
 
-    card = photos.map((photo) => {
-        return buildCard(photo);
-    });
+    if(photos){
+        card = photos.data.photos.map((photo) => {
+            return buildCard(photo);
+        })
+    }
+
 
     if (loading) {
         return (

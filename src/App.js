@@ -34,7 +34,7 @@ const App = () => {
         <div className="App-body">
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/home" component={Photos} />
+            <Route exact path="/photos" component={Photos} />
             <Route exact path="/news" component={News} />
             
             <Route path="*" component={Error404} />
