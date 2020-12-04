@@ -1,100 +1,56 @@
 import React, { useState, useEffect } from 'react';
-// Helpers
-import { formatDate } from './helpers';
-// API
-import { API_URL } from './api';
-// Components
-import WeatherData from './components/WeatherData';
-import Info from './components/Info';
-import Unit from './components/Unit';
-import Previous from './components/Previous';
-// Img
-import BGImage from './img/mars.jpg';
-// Styles
-import {
-  AppWrapper,
-  GlobalStyle,
-  MarsWeather,
-  InfoWrapper,
-} from './App.styles';
-import {Navbar, Nav, Form, FormControl, Button} from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import Home from './components/Home';
+import Photos from './components/Photos';
+import News from './components/News';
+import { Alert } from '@material-ui/lab';
+
+import './App.css';
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
-  const [weather, setWeather] = useState([]);
-  const [selectedSol, setSelectedSol] = useState();
-  const [metric, setMetric] = useState(true);
-  const [previous, setPrevious] = useState(false);
-  console.log(weather);
-
-  useEffect(() => {
-    const fetchFromAPI = async () => {
-      const weather = await (await fetch(API_URL)).json();
-      const marsWeather = weather.sol_keys.map((solKey) => {
-        return {
-          sol: solKey,
-          maxTemp: weather[solKey].AT?.mx || 'No data',
-          minTemp: weather[solKey].AT?.mn || 'No data',
-          windSpeed: Math.round(weather[solKey].HWS?.av || 0),
-          windDirectionDegrees:
-            weather[solKey].WD?.most_common?.compass_degrees || 0,
-          date: formatDate(new Date(weather[solKey].First_UTC)),
-        };
-      });
-      setWeather(marsWeather);
-      setSelectedSol(marsWeather.length - 1);
-      setLoading(false);
-    };
-
-    fetchFromAPI();
-  }, []);
-
   return (
     <>
-      {/* <Navbar bg="dark" expand="lg">
-          <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#link">Link</Nav.Link>
-            </Nav>
-            <Form inline>
-              <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-              <Button variant="outline-success">Search</Button>
-            </Form>
-          </Navbar.Collapse>
-      </Navbar> */}
-
-      <GlobalStyle bgImage={BGImage} />
+      <Router>
+        <div className="App">
+          <header className="App-header navBar">
+            <Link className="link" to="/">
+              Home
+            </Link>
+            <Link className="link" to="/photos">
+              Photos
+            </Link>
+            <Link className="link" to="/news">
+              News
+            </Link>
+          </header>
+        </div>
       
-      <AppWrapper>
-        <MarsWeather>
-          {loading ? (
-            <div>Loading ...</div>
-          ) : (
-            <>
-              <h1 className='main-title'>
-                Latest weather at Elysium Plantitia
-              </h1>
-              <WeatherData sol={weather[selectedSol]} isMetric={metric} />
-              <InfoWrapper>
-                <Info />
-                <Unit metric={metric} setMetric={setMetric} />
-              </InfoWrapper>
-            </>
-          )}
-        </MarsWeather>
-        <Previous
-          weather={weather}
-          previous={previous}
-          setPrevious={setPrevious}
-          setSelectedSol={setSelectedSol}
-          isMetric={metric}
-        />
-      </AppWrapper>
+        {/* <ul class="navBar">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Photos</a></li>
+          <li><a href="#">News</a></li>
+        </ul> */}
+
+        <div className="App-body">
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/home" component={Photos} />
+            <Route exact path="/news" component={News} />
+            
+            <Route path="*" component={Error404} />
+          </Switch>
+        </div>
+      </Router>
     </>
   );
 };
+
+function Error404() {
+  return (
+    <Alert severity="error" className="alert">
+      404: Resource Not Found
+    </Alert>
+  )
+}
 
 export default App;
