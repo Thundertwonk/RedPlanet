@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import Home from './components/Home';
+import Weather from './components/Weather';
 import Photos from './components/Photos';
 import News from './components/News';
 import { Alert } from '@material-ui/lab';
@@ -15,6 +16,9 @@ const App = () => {
           <header className="App-header navBar">
             <Link className="link" to="/">
               Home
+            </Link>
+            <Link className="link" to="/weather">
+              Weather
             </Link>
             <Link className="link" to="/photos">
               Photos
@@ -34,6 +38,7 @@ const App = () => {
         <div className="App-body">
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/weather" component={Weather} />
             <Route exact path="/photos" component={Photos} />
             <Route exact path="/news" component={News} />
             
