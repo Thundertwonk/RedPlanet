@@ -1,23 +1,169 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Grid, makeStyles, Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { Card } from 'react-bootstrap';
 import '../App.css';
+import axios from 'axios';
 
 const News = () => {
-	return (
-		<div>
-		<li class="slide"><div class="list_date">November 24, 2020</div><div class="content_title"><a href="https://mars.nasa.gov/news/8805/moxie-could-help-future-rockets-launch-off-mars/" target="_self">MOXIE Could Help Future Rockets Launch Off Mars</a></div><div class="article_teaser_body">NASA's Perseverance rover carries a device to convert Martian air into oxygen that, if produced on a larger scale, could be used not just for breathing, but also for fuel.</div></li>
-		<li class="slide"><div class="list_date">November 18, 2020</div><div class="content_title"><a href="https://mars.nasa.gov/news/8801/hear-audio-from-nasas-perseverance-as-it-travels-through-deep-space/" target="_self">Hear Audio From NASA's Perseverance As It Travels Through Deep Space</a></div><div class="article_teaser_body">The first to be rigged with microphones, the agency's latest Mars rover picked up the subtle sounds of its own inner workings during interplanetary flight.</div></li>
-		<li class="slide"><div class="list_date">November 13, 2020</div><div class="content_title"><a href="https://mars.nasa.gov/news/8798/mars-is-getting-a-new-robotic-meteorologist/" target="_self">Mars Is Getting a New Robotic Meteorologist</a></div><div class="article_teaser_body">Sensors on NASA's Perseverance will help prepare for future human exploration by taking weather measurements and studying dust particles.</div></li>
-		<li class="slide"><div class="list_date">November 13, 2020</div><div class="content_title"><a href="https://mars.nasa.gov/news/8797/heat-and-dust-help-launch-martian-water-into-space-scientists-find/" target="_self">Heat and Dust Help Launch Martian Water Into Space, Scientists Find</a></div><div class="article_teaser_body">Scientists using an instrument aboard NASA’s Mars Atmosphere and Volatile EvolutioN, or MAVEN, spacecraft have discovered that water vapor near the surface of the Red Planet is lofted higher into the atmosphere than anyone expected was possible. </div></li>
-		<li class="slide"><div class="list_date">November 12, 2020</div><div class="content_title"><a href="https://mars.nasa.gov/news/8796/nasas-curiosity-takes-selfie-with-mary-anning-on-the-red-planet/" target="_self">NASA's Curiosity Takes Selfie With 'Mary Anning' on the Red Planet</a></div><div class="article_teaser_body">The Mars rover has drilled three samples of rock in this clay-enriched region since arriving in July.</div></li>
-		<li class="slide"><div class="list_date">November 10, 2020</div><div class="content_title"><a href="https://mars.nasa.gov/news/8794/independent-review-indicates-nasa-prepared-for-mars-sample-return-campaign/" target="_self">Independent Review Indicates NASA Prepared for Mars Sample Return Campaign</a></div><div class="article_teaser_body">NASA released an independent review report Tuesday indicating the agency is well positioned for its Mars Sample Return campaign to bring pristine samples from Mars to Earth for scientific study.</div></li>
-		<li class="slide"><div class="list_date">November 10, 2020</div><div class="content_title"><a href="https://mars.nasa.gov/news/8792/nasas-perseverance-rover-100-days-out/" target="_self">NASA's Perseverance Rover 100 Days Out</a></div><div class="article_teaser_body">Mark your calendars: The agency's latest rover has only about 8,640,000 seconds to go before it touches down on the Red Planet, becoming history's next Mars car.</div></li>
-		<li class="slide"><div class="list_date">October 27, 2020</div><div class="content_title"><a href="https://mars.nasa.gov/news/8785/nasas-perseverance-rover-is-midway-to-mars/" target="_self">NASA's Perseverance Rover Is Midway to Mars </a></div><div class="article_teaser_body">Sometimes half measures can be a good thing – especially on a journey this long. The agency's latest rover only has about 146 million miles left to reach its destination.</div></li>
-		<li class="slide"><div class="list_date">October 22, 2020</div><div class="content_title"><a href="https://mars.nasa.gov/news/8782/sensors-on-mars-2020-spacecraft-answer-long-distance-call-from-earth/" target="_self">Sensors on Mars 2020 Spacecraft Answer Long-Distance Call From Earth</a></div><div class="article_teaser_body">Instruments tailored to collect data during the descent of NASA's next rover through the Red Planet's atmosphere have been checked in flight.</div></li>
-		<li class="slide"><div class="list_date">October 19, 2020</div><div class="content_title"><a href="https://mars.nasa.gov/news/8778/nasas-perseverance-rover-bringing-3d-printed-metal-parts-to-mars/" target="_self">NASA's Perseverance Rover Bringing 3D-Printed Metal Parts to Mars</a></div><div class="article_teaser_body">For hobbyists and makers, 3D printing expands creative possibilities; for specialized engineers, it's also key to next-generation spacecraft design.</div></li>
-		<li class="slide"><div class="list_date">October 16, 2020</div><div class="content_title"><a href="https://mars.nasa.gov/news/8776/nasa-insights-mole-is-out-of-sight/" target="_self">NASA InSight's 'Mole' Is Out of Sight</a></div><div class="article_teaser_body">Now that the heat probe is just below the Martian surface, InSight's arm will scoop some additional soil on top to help it keep digging so it can take Mars' temperature.</div></li>
-		<li class="slide"><div class="list_date">October  8, 2020</div><div class="content_title"><a href="https://mars.nasa.gov/news/8770/nasas-perseverance-rover-will-peer-beneath-mars-surface/" target="_self">NASA's Perseverance Rover Will Peer Beneath Mars' Surface </a></div><div class="article_teaser_body">The agency's newest rover will use the first ground-penetrating radar instrument on the Martian surface to help search for signs of past microbial life. </div></li>
-		</div>
-	);
-};
+	const url = 'https://api.nasa.gov/planetary/apod';
+	const api_key = 'bdNZFAvR7v96DkPiIXtGjeW6uvR3SuodX3tZsD3p';
+	
+    const [ loading, setLoading ] = useState(true);
+    const [ photos, setPhotos ] = useState(null);
+
+    let card = null;
+
+    useEffect(() => {
+		console.log('on load useeffect');
+
+		async function fetchData() {
+			try {
+                const data = await axios.get(`${url}?api_key=${api_key}&hd=True`);
+                console.log('url', `${url}?api_key=${api_key}&hd=True`);
+                console.log(data)
+                setLoading(false);
+                setPhotos(data);
+			} catch (e) {
+                setLoading(false);
+				console.log(e);
+			}
+        }
+
+        fetchData();
+	}, []);
+
+	if (photos) {
+		console.log('photos', photos)
+		card = 
+			<div className="posts__item posts__item--main">
+				<div className="posts__image">
+					<img src={`${photos.data.hdurl}?auto=compress&cs=tinysrgb&h=350`} alt="Post image" />
+				</div>
+
+				<div className="posts__information">
+					<div className="posts__date">
+						{photos.data.date}
+					</div>
+
+					<div className="posts__title">
+						<a href="#">Astronomy Picture Of The Day: {photos.data.title}</a>
+					</div>
+				</div>
+			</div>
+	}
+
+	
+	if (loading) {
+		return (
+			<div class="loader-container">
+                <div class="loader">
+					{/* <img src="../src/img/loading.gif" /> */}
+				</div>
+            </div>
+		)
+	}
+	else {
+		return (
+			<div className="gallery-div">
+				<div className="container">
+					<div className="posts">
+						
+						{card}
+						
+						<div className="posts__item">
+							<div className="posts__image">
+								<img src="https://mars.nasa.gov/system/news_items/main_images/8801_1---M2020-EDL-Mic-Annotation-16.jpg&auto=format&fit=crop&w=500&q=60" alt="NASA's Perseverance" />
+							</div>
+		
+							<div className="posts__information">
+								<div className="posts__date">
+									November 18, 2020
+								</div>
+		
+								<div className="posts__title">
+									<a href="https://mars.nasa.gov/news/8801/hear-audio-from-nasas-perseverance-as-it-travels-through-deep-space/" target="_self">Hear Audio From NASA's Perseverance As It Travels Through Deep Space</a>
+								</div>
+		
+								<div className="posts__author">
+									<a href="#">
+										<img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Author" />
+									</a>
+								</div>
+							</div>
+						</div>
+						
+						<div className="posts__item">
+							<div className="posts__image">
+								<img src="https://mars.nasa.gov/system/news_items/main_images/8798_PIA22109.jpg&auto=format&fit=crop&w=500&q=60" alt="Post image" />
+							</div>
+		
+							<div className="posts__information">
+								<div className="posts__date">
+									November 13, 2020
+								</div>
+		
+								<div className="posts__title">
+									<a href="https://mars.nasa.gov/news/8798/mars-is-getting-a-new-robotic-meteorologist/" target="_self">Mars Is Getting a New Robotic Meteorologist</a>
+								</div>
+		
+								<div className="posts__author">
+									<a href="#">
+										<img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Author" />
+									</a>
+								</div>
+							</div>
+						</div>
+						
+						<div className="posts__item">
+							<div className="posts__image">
+								<img src="https://mars.nasa.gov/system/resources/detail_files/25389_maven_illo_v7-1000.jpg&auto=format&fit=crop&w=500&q=60" alt="Post image" />
+							</div>
+		
+							<div className="posts__information">
+								<div className="posts__date">
+								November 12, 2020
+								</div>
+		
+								<div className="posts__title">
+									<a href="https://mars.nasa.gov/news/8797/heat-and-dust-help-launch-martian-water-into-space-scientists-find/" target="_self">Heat and Dust Help Launch Martian Water Into Space, Scientists Find </a>
+								</div>
+		
+								<div className="posts__author">
+									<a href="#">
+										<img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Author" />
+									</a>
+								</div>
+							</div>
+						</div>
+						
+						<div className="posts__item">
+							<div className="posts__image">
+								<img src="https://mars.nasa.gov/system/news_items/list_view_images/8792_parachute-320x240.jpg&auto=format&fit=crop&w=500&q=60" alt="Post image" />
+							</div>
+		
+							<div className="posts__information">
+								<div className="posts__date">
+									November 10, 2020
+								</div>
+		
+								<div className="posts__title">
+									<a href="https://mars.nasa.gov/news/8792/nasas-perseverance-rover-100-days-out/" target="_self">NASA's Perseverance Rover 100 Days Out</a>
+								</div>
+		
+								<div className="posts__author">
+									<a href="#">
+										<img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Author" />
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		)
+	}
+}
+	
 
 export default News;

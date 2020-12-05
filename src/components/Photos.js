@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, makeStyles, Button } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { Card } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import '../App.css';
 import axios from 'axios';
 
@@ -29,23 +29,33 @@ const useStyles = makeStyles({
     },
     cardBody: {
         padding: '1.3rem'
+    },
+    loading: {
+        margin: '0 auto'
     }
 });
 
 const Photos = () => {
-    const url = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000';
+    const url = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=120';
     const api_key = 'bdNZFAvR7v96DkPiIXtGjeW6uvR3SuodX3tZsD3p';
 
     const classes = useStyles();
     const [ loading, setLoading ] = useState(true);
     const [ photos, setPhotos ] = useState(null);
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     let card = null;
 
     useEffect(() => {
+		console.log('on load useeffect');
+
 		async function fetchData() {
 			try {
-				const data = await axios.get(`${url}&api_key=${api_key}`);
+                const data = await axios.get(`${url}&api_key=${api_key}`);
+
                 setLoading(false);
                 setPhotos(data);
 			} catch (e) {
@@ -53,48 +63,70 @@ const Photos = () => {
 				console.log(e);
 			}
         }
-        fetchData()
+
+        fetchData();
     }, []);
 
     const buildCard = (photo) => {
 		return (
-			<Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={photo.id}>
-                <Card className={classes.card}>
-                    <Link to={`/characters/${photo.id}`}>
-                        <div className="img-container">
-                            <Card.Img variant="top" src={photo.img_src} alt={`${photo.rover.name}`}/>
-                        </div>
-                        
-                        <Card.Body className={classes.cardBody}>
-                            <Card.Title>{photo.earth_date}</Card.Title>
-                        </Card.Body>
-                    </Link>
-                </Card>
-			</Grid>
+            <div className="gallery-container h-2" key={photo.id}>
+                <div className="gallery-item">
+                    <div className="image" variant="primary" onClick={handleShow}>
+                        <img src={photo.img_src} />
+                    </div>
+                </div>
+
+                {/* <Modal show={show} onHide={handleClose} style={{opacity:1}}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{photo.rover.name}</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <img src={photo.img_Src} />
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>        */}
+            </div>
 		);
     };
 
-    if(photos){
+    if (photos) {
         card = photos.data.photos.map((photo) => {
             return buildCard(photo);
-        })
+        });
     }
-
+    
 
     if (loading) {
         return (
-            <div>
-                <h2>Loading...</h2>
+            <div class="loader-container">
+                <div class="loader"></div>
             </div>
         )
     } else {
         return (
-            <div>
-                <p>
-                    This is a simple example of using React to Query the Marvel API.
-                </p>
-                {card}
+            // <Grid container className={classes.grid} spacing={5}>
+            //     {card}
+            // </Grid>
+
+            // <div class="gallery_container-all">
+            //     {card}
+            // </div>
+            <div className="gallery-div">
+                <div id="gallery">
+                    <div className="gallery-wrapper">
+                        {card}
+                    </div>
+                </div>         
             </div>
+            
+                
+            
         );
     }
 };

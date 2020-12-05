@@ -1,5 +1,30 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-  
+html {
+    /* font: normal 20px montserrat; */
+    overflow-x: hidden;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+  background-image: url('../src/img/mars.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.App-body {
+  margin: 0px auto;
+}
+
+/* a:hover {
+  text-decoration: #D06D6D;
+} */
+
 .navBar {
     margin: 100px auto 0;
     list-style: none;
@@ -32,6 +57,11 @@
     padding: 30px;
 }
 
+.link:visited {
+  color: #fff;
+  text-decoration: none;
+}
+
 .link::after { 
     content: "";
     position: absolute;
@@ -47,6 +77,39 @@
 .link:hover { color: #D06D6D; }
 .link:hover::after { width: 100%; }
 
+.img-container{
+    max-height: 25rem;
+    margin: auto;
+    overflow: hidden;
+    border: 1px solid #f7ffe6;
+}
+
+.btn {
+    background-color: #007acc;
+    color: #fff;
+}
+
+.search {
+	padding: 1.5em;
+}
+
+.searchInput {
+	min-width: 10em;
+	height: 1em;
+}
+
+.alert {
+	margin: 1.5em auto;
+	width: 50%;
+	text-align: center;
+}
+
+.pagination {
+	margin: 1.5em 0;
+}
+/* // .card {
+//     height: 90%;
+// } */
 .card {
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 	transition: 0.3s;
@@ -57,9 +120,9 @@
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-.container {
+/* .container {
 	padding: 2px 16px;
-  }
+  } */
 
 .card-img-top {
     width: 100%;
@@ -71,3 +134,253 @@
 .card-img-top:hover {
     transform: scale(1.05);
 }
+
+
+.gallery-wrapper {
+    padding: 2rem 7rem;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 1rem;
+    grid-auto-flow: dense;
+    z-index: 2;
+}
+
+.gallery-item {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    filter: drop-shadow(2px 2px 3px #333);
+  }
+  
+  .gallery-item .image {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .gallery-item .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    cursor: pointer;
+    transition: all 400ms ease-in;
+    transform: scale(1);
+  }
+  
+  .gallery-item .image img:hover {
+    transform: scale(1.1);
+  }
+  
+  .w-1{
+    grid-column: span 1;
+  }
+  .w-2{
+    grid-column: span 2;
+  }
+  .w-3{
+    grid-column: span 3;
+  }
+  .w-4{
+    grid-column: span 4;
+  }
+  .w-5{
+    grid-column: span 5;
+  }
+  
+  .h-1{
+    grid-row: span 1;
+  }
+  .h-2{
+    grid-row: span 2;
+  }
+  .h-3{
+    grid-row: span 3;
+  }
+  .h-4{
+    grid-row: span 4;
+  }
+  .h-5{
+    grid-row: span 5;
+  }
+
+.gallery-div {
+    margin: 0 auto;
+    width: 90%;
+    height: 550px;
+    background-color: transparent;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.gallery-div::-webkit-scrollbar {
+    display: none;
+}
+
+.container {
+    max-width: 1200px;
+    min-width: 320px;
+    padding: 60px 0;
+    margin: 0 auto;
+  }
+  
+  .posts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .posts .posts__item {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 32%;
+    background-color: #fff;
+    margin-bottom: 22px;
+    position: relative;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  }
+  .posts .posts__item--main {
+    flex-basis: 66%;
+  }
+  .posts .posts__item--main:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  }
+  .posts .posts__item--main .posts__image {
+    display: flex;
+    flex-grow: 1;
+  }
+  .posts .posts__item--main .posts__information {
+    position: absolute;
+    bottom: 35px;
+    left: 50px;
+    padding: 0 25px 0 0;
+    z-index: 1;
+  }
+  .posts .posts__item--main .posts__title a {
+    font-size: 30px;
+    line-height: 36px;
+    letter-spacing: 0.75px;
+    color: #fff;
+  }
+  .posts__image > img {
+    display: block;
+    width: 100%;
+  }
+  .posts__information {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px 25px;
+    flex-grow: 1;
+  }
+  .posts__date {
+    font-size: 13px;
+    line-height: 30px;
+    letter-spacing: 0.325px;
+    color: #818181;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 7px 0;
+  }
+  .posts__title {
+    margin-top: 7px;
+    margin-bottom: auto;
+  }
+  .posts__title a {
+    font-size: 22px;
+    line-height: 30px;
+    color: #000;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.55px;
+  }
+  .posts__title a:hover {
+    text-decoration: underline;
+    color: #D06D6D;
+  }
+  .posts__author {
+    margin-top: 55px;
+  }
+  .posts__author img {
+    border-radius: 50px;
+    width: 60px;
+  }
+  
+  @media screen and (max-width: 992px) {
+    .posts__information {
+      padding: 10px 15px 15px 15px;
+    }
+  
+    .posts__date {
+      font-size: 12px;
+    }
+  
+    .posts__title a {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  
+    .posts__item--main .posts__information .post-title a {
+      font-size: 20px;
+      line-height: 26px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .posts__item {
+      flex-basis: 49%;
+    }
+  
+    .posts__item--main {
+      flex-basis: 100%;
+      justify-content: center;
+    }
+    .posts__item--main .posts__image {
+      display: block;
+    }
+    .posts__item--main .posts__information {
+      width: 100%;
+      bottom: auto;
+      left: auto;
+      align-items: center;
+      text-align: center;
+      padding: 0;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .posts__item {
+      flex-basis: 100%;
+    }
+  }
+  
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.loader {
+  /* border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  width: 130px;
+  height: 130px;
+  animation: spin 2s linear infinite; */
+  background-image: url(./img/150x150.gif);
+  width: 150px;
+  height: 150px;
+}
+/* 
+@keyframes spin {
+  0%  { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+} */
