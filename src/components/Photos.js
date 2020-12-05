@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 });
 
 const Photos = () => {
-    const url = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=120';
+    const url = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=179';
     const api_key = 'bdNZFAvR7v96DkPiIXtGjeW6uvR3SuodX3tZsD3p';
 
     const classes = useStyles();
@@ -55,7 +55,7 @@ const Photos = () => {
 		async function fetchData() {
 			try {
                 const data = await axios.get(`${url}&api_key=${api_key}`);
-
+                console.log(data)
                 setLoading(false);
                 setPhotos(data);
 			} catch (e) {
@@ -72,7 +72,7 @@ const Photos = () => {
             <div className="gallery-container h-2" key={photo.id}>
                 <div className="gallery-item">
                     <div className="image" variant="primary" onClick={handleShow}>
-                        <img src={photo.img_src} />
+                        <img src={photo.img_src} alt={photo.earth_date}/>
                     </div>
                 </div>
 

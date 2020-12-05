@@ -9,8 +9,17 @@ const useStyles = makeStyles({
 const Home = () =>{
     const classes = useStyles();
     return(
-        <div className={classes}>
-        <img src="https://mars.nasa.gov/images/mep/allaboutmars/quickfacts/Mars_QuickFacts_sample7_recolored.png" alt="mars fact"></img>
+        <div>
+            <img src="https://mars.nasa.gov/images/mep/allaboutmars/quickfacts/Mars_QuickFacts_sample7_recolored.png" alt="mars fact"></img>
+        {/* <div>
+            <table>
+                <tr>
+                    <th></th>
+                    <th>Earth</th>
+                    <th>Mars</th>
+                </tr>
+            </table>
+            </div> */}
         </div>
     )
 
