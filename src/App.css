@@ -30,12 +30,27 @@ body {
     list-style: none;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     text-align: center;
     padding: 0;     
     min-width: 200px;
     margin: 40px;
     padding: 0 40px;
     background-color: #000;
+}
+
+.img-icon-div {
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-right: 200px;
+}
+
+.img-icon {
+    width: 60px;
+    height: 60px;
+    padding: 5px;
 }
 
 @media screen and (min-width: 400px) {
@@ -205,6 +220,20 @@ body {
   .h-5{
     grid-row: span 5;
   }
+
+.home-div {
+    margin: 0 auto;
+    width: 60%;
+    height: 580px;
+    background-color: transparent;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.home-div::-webkit-scrollbar {
+    display: none;
+}
 
 .gallery-div {
     margin: 0 auto;

@@ -14,6 +14,10 @@ const App = () => {
       <Router>
         <div className="App">
           <header className="App-header navBar">
+            <div className="img-icon-div">
+              <img src="https://i.imgur.com/SwK7nlV.png" className="img-icon" />
+            </div>
+            
             <Link className="link" to="/">
               Home
             </Link>

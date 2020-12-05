@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import BGImage from '../img/mars.jpg';
-// import '../App.css';
-import { Grid, makeStyles, Button } from '@material-ui/core';
+import '../App.css';
 
-const useStyles = makeStyles({
-})
 
 const Home = () =>{
-    const classes = useStyles();
     return(
-        <div>
+        <div className="home-div">
             <img src="https://mars.nasa.gov/images/mep/allaboutmars/quickfacts/Mars_QuickFacts_sample7_recolored.png" alt="mars fact"></img>
         {/* <div>
             <table>
