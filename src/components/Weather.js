@@ -3,10 +3,10 @@ import { formatDate } from '../helpers';
 // API
 import { API_URL } from '../api';
 // Components
-import WeatherData from './WeatherData';
-import Info from './Info';
-import Unit from './Unit';
-import Previous from './Previous';
+import WeatherData from '../components/WeatherData';
+import Info from '../components/Info';
+import Unit from '../components/Unit';
+import Previous from '../components/Previous';
 // Img
 import BGImage from '../img/mars.jpg';
 // Styles
@@ -24,11 +24,12 @@ const Home = () => {
     const [selectedSol, setSelectedSol] = useState();
     const [metric, setMetric] = useState(true);
     const [previous, setPrevious] = useState(false);
-    console.log(weather);
   
     useEffect(() => {
       const fetchFromAPI = async () => {
         const weather = await (await fetch(API_URL)).json();
+        console.log(API_URL)
+        console.log(weather)
         const marsWeather = weather.sol_keys.map((solKey) => {
           return {
             sol: solKey,
@@ -40,6 +41,7 @@ const Home = () => {
             date: formatDate(new Date(weather[solKey].First_UTC)),
           };
         });
+        console.log(marsWeather)
         setWeather(marsWeather);
         setSelectedSol(marsWeather.length - 1);
         setLoading(false);
